@@ -1,33 +1,22 @@
 /* Задание на урок:
 
-1) Автоматизировать вопросы пользователю про фильмы при помощи цикла
+1) Первую часть задания повторить по уроку
 
-2) Сделать так, чтобы пользователь не мог оставить ответ в виде пустой строки,
-отменить ответ или ввести название фильма длинее, чем 50 символов. Если это происходит - 
-возвращаем пользователя к вопросам опять
+2) Создать функцию showMyDB, которая будет проверять свойство privat. Если стоит в позиции
+false - выводит в консоль главный объект программы
 
-3) При помощи условий проверить  personalMovieDB.count, и если он меньше 10 - вывести сообщение
-"Просмотрено довольно мало фильмов", если от 10 до 30 - "Вы классический зритель", а если больше - 
-"Вы киноман". А если не подошло ни к одному варианту - "Произошла ошибка"
+3) Создать функцию writeYourGenres в которой пользователь будет 3 раза отвечать на вопрос 
+"Ваш любимый жанр под номером ${номер по порядку}". Каждый ответ записывается в массив данных
+genres
 
-4) Потренироваться и переписать цикл еще двумя способами*/
+P.S. Функции вызывать не обязательно*/
 
 'use strict';
 
-let flag = 0;
-const numberOfFilms = +prompt('Cколько фильмов смотрели?');
-if (numberOfFilms < 10) {
-    alert('Просмотрено довольно мало фильмов');
+let flag = 0, 
+    numberOfFilms;
 
-} else if (numberOfFilms <= 30 && numberOfFilms >= 10) {
-    alert('Вы классический зритель');
-
-} else if (numberOfFilms > 30) {
-    alert('Вы киноман');
-
-} else {
-    alert('Произошла ошибка')
-}
+// start();
 
 const personalMovieDB = {
     count: numberOfFilms,
@@ -37,26 +26,70 @@ const personalMovieDB = {
     privat: false
 };
 
-while (flag < 2) {
+writeYourGenres();
 
-    const a = prompt('ласт фильм?');
+// showMyDB(personalMovieDB.privat);
 
-    if (a.length < 50 && a != null && a != '') {
+// rememberMyFilms();
 
-        while (1) {
+// detectPersonalLevel();
 
-            const b = prompt('оценка??');
+function start() {
+    numberOfFilms = +prompt('Cколько фильмов смотрели?');
 
-            if (b != null && b != '') {
-
-                personalMovieDB.movies[a] = b;
-                flag++;
-                break;
-
-            } 
-
-        }
-
+    while (numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
+        numberOfFilms = +prompt('Cколько фильмов смотрели?');
     }
+}
 
+function rememberMyFilms() {
+    while (flag < 2) {
+
+        let a = prompt('ласт фильм?');
+    
+        if (a != null) {
+    
+            if (a.length < 50 && a != '') {
+    
+                while (1) {
+    
+                    let b = prompt('оценка??');
+    
+                    if (b != null && b != '') {
+    
+                        personalMovieDB.movies[a] = b;
+                        flag++;
+                        break;
+                    } 
+                }
+            }
+        }
+    }
+}
+
+function detectPersonalLevel() {
+    if (numberOfFilms < 10) {
+        alert('Просмотрено довольно мало фильмов');
+    
+    } else if (numberOfFilms <= 30 && numberOfFilms >= 10) {
+        alert('Вы классический зритель');
+    
+    } else if (numberOfFilms > 30) {
+        alert('Вы киноман');
+    
+    } else {
+        alert('Произошла ошибка')
+    }
+}
+
+function showMyDB(hidden) {
+    if (!hidden) {
+        console.log(personalMovieDB);
+    }
+}
+
+function writeYourGenres() {
+    for (let i = 0; i < 3; i++) {
+        personalMovieDB.genres[i] = prompt(`Ваш любимый жанр под номером ${i + 1}:`);
+    }
 }
