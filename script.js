@@ -1,63 +1,67 @@
-// touchstart
-// коснулись пальцем и событие выполнилось
-
-// touchmovе
-// если палец при касании пальца начинает двигаться по нему, то при каждом
-// смещенни пальца будет срабатывать touchmovе
-
-// toucchend
-// выполняется после того, как убрали палец
-
-// touchenter
-// вели пальцем по экрану, и навели на какой-то элемент, на котором навешено это событие
-// т. е. как только палец зашел за пределы этого элемента
-
-// touchleave
-// противоположное событие, палец ушел за пределы этого элемента
-
-// touchcancel
-// например, серфили браузер, а палец ушел за границы браузера 
+// const timerId = setTimeout(function(text) {
+//     console.log(text);
+// }, 2000, 'hello');
+// второй параметр это время в мс
+// третий параметр передается в параметр функции
 
 
-window.addEventListener('DOMContentLoaded', (e) => {
-    const box = document.querySelector('.box');
+// setTimeout(logger, 2000);
 
-    box.addEventListener('touchstart', (e) => {
-        e.preventDefault();
+// function logger() {
+//     console.log('text');
+// }
+// эта хуйня работает точь в точь, как и код выше. Когда мы записываем setTimeout в какую-то
+// переменную, мы записываем числовой индетификатор этого таймера 
 
-        console.log('asdwd');
-        // console.log(e.touches);
-        // выдает список всех пальцев, которые сейчас взаимодействуют с экраном
-        // те, которые сейчас тапнули и держат на мониторе
 
-        console.log(e.targetTouches);
-        // на случай если нас интересуют все пальцы, которые взаимодействую конкретно
-        // с этим элементом
+// const timerId = setTimeout(logger, 2000);
 
-        console.log(e.changedTouches);
-        // cписок пальцев, которые учавствуют в текущем событии
-        // например, если это событие touchend, то список будет содержать палец,
-        // который был убран, даже если остальные 4 пальца до сих пор на экране,
-        // т. е. это пальцы которые совершили определенное, назначенное уже действие
-    });
+// clearInterval(timerId);
 
-    // box.addEventListener('touchmove', (e) => {
-    //     e.preventDefault();
+// function logger() {
+//     console.log('text');
+// }
+//здесь в консоли нихуя не появится
 
-    //     console.log('move');
-    //     выводиться каждый раз, когда сдвигаешься хоть на пиксель
-    // });
+// const btn = document.querySelector('.btn');
+// let timerId,
+//     i = 0;
 
-    // box.addEventListener('touchend', (e) => {
-    //     e.preventDefault();
+// btn.addEventListener('click', () => {
+//     // const timerId = setTimeout(logger, 2000);
+//     timerId = setInterval(logger, 500);
+//     // каждые 2 сек будет вызываться logger()
+// })
+// clearInterval(timerId);
+// // когда мы инициализировали timerId внутри обработчика, не могли юзать ибо локальная переменная
+// // эта хуйня не будет останавливать нихуя
 
-    //     console.log('end');
-    // });
+// function logger() {
+//     console.log('text');
+//     i++;
+// }
 
-    box.addEventListener('touchmove', (e) => {
-        e.preventDefault();
 
-        console.log(e.targetTouches[0].pageX);
-    });
+const btn = document.querySelector('.btn');
+let timerId,
+    i = 0;
 
-});
+btn.addEventListener('click', () => {
+    // const timerId = setTimeout(logger, 2000);
+    timerId = setInterval(logger, 500);
+    // каждые 2 сек будет вызываться logger()
+})
+
+function logger() {
+    if (i === 3) {
+        clearInterval(timerId);
+        // выведет в консоли 4 hello
+    }
+    console.log('text');
+    i++;
+}
+
+let id = setTimeout(function log(){
+    console.log('Hello');
+    id = setTimeout(log, 500);
+}, 500)
