@@ -1,67 +1,41 @@
-// const timerId = setTimeout(function(text) {
-//     console.log(text);
-// }, 2000, 'hello');
-// второй параметр это время в мс
-// третий параметр передается в параметр функции
+// классы это красивая обертка функций конструкторов, классы внутри - те же функции
+'use strict'
 
-
-// setTimeout(logger, 2000);
-
-// function logger() {
-//     console.log('text');
-// }
-// эта хуйня работает точь в точь, как и код выше. Когда мы записываем setTimeout в какую-то
-// переменную, мы записываем числовой индетификатор этого таймера 
-
-
-// const timerId = setTimeout(logger, 2000);
-
-// clearInterval(timerId);
-
-// function logger() {
-//     console.log('text');
-// }
-//здесь в консоли нихуя не появится
-
-// const btn = document.querySelector('.btn');
-// let timerId,
-//     i = 0;
-
-// btn.addEventListener('click', () => {
-//     // const timerId = setTimeout(logger, 2000);
-//     timerId = setInterval(logger, 500);
-//     // каждые 2 сек будет вызываться logger()
-// })
-// clearInterval(timerId);
-// // когда мы инициализировали timerId внутри обработчика, не могли юзать ибо локальная переменная
-// // эта хуйня не будет останавливать нихуя
-
-// function logger() {
-//     console.log('text');
-//     i++;
-// }
-
-
-const btn = document.querySelector('.btn');
-let timerId,
-    i = 0;
-
-btn.addEventListener('click', () => {
-    // const timerId = setTimeout(logger, 2000);
-    timerId = setInterval(logger, 500);
-    // каждые 2 сек будет вызываться logger()
-})
-
-function logger() {
-    if (i === 3) {
-        clearInterval(timerId);
-        // выведет в консоли 4 hello
+class Rectangle {
+    constructor(height, width) {
+        this.height = height;
+        this.width = width;
     }
-    console.log('text');
-    i++;
+
+    calcArea() {
+        return this.height * this.width
+    }
 }
 
-let id = setTimeout(function log(){
-    console.log('Hello');
-    id = setTimeout(log, 500);
-}, 500)
+class ColorredRectangleWithText extends Rectangle {
+    // новый класс наследуется от Rectangle
+    constructor(height, width, text, bgColor) {
+        super(height, width);
+        // вызывает содержимое конструктора родителя
+        // всегда должна быть на первом месте в новом конструкторе
+        this.text = text;
+        this.bgColor = bgColor;
+    }
+
+    showMyProps() {
+        console.log(`Teкст: ${this.text}, цвет: ${this.bgColor}`);
+    }
+}
+
+const div = new ColorredRectangleWithText(25, 10, 'Hello world', 'red');
+
+div.showMyProps();
+console.log(div.calcArea());
+console.log(div);
+
+
+// const square = new Rectangle(10, 10);
+// const long = new Rectangle(20, 100);
+
+// console.log(square.calcArea());
+// console.log(long);
